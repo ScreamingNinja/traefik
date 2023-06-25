@@ -1,0 +1,48 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    restart: unless-stopped
+
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/letsencrypt
+      - logs:/logs
+
+    networks:
+      - traefik
+
+    security_opt:
+      - no-new-privileges:true
+
+    environment:
+      TZ: US/Eastern
+      PUID: 1000
+      PGID: 1000
+
+    env_file:
+      - stack.env
+
+volumes:
+  certs:
+    name: traefik-certs
+    external: true
+  logs:
+    name: traefik-logs
+    external: true
+
+networks:
+  traefik:
+    name: traefik
+    driver: bridge
+    attachable: true
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: fd00:acdc:cafe::/96
