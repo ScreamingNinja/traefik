@@ -42,7 +42,4 @@ networks:
     name: traefik
     driver: bridge
     attachable: true
-    enable_ipv6: true
-    ipam:
-      config:
-        - subnet: ${SUBNET}
+    enable_ipv6: false
