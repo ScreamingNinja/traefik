@@ -10,7 +10,8 @@ services:
       - 8080:8080
 
     volumes:
-      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ${TRAEFIK_CONFIG_FILE:-./traefik.yml}:/etc/traefik/traefik.yml:ro
+      - ${DYNAMIC_CONFIG_DIR:-./dynamic}:/etc/traefik/dynamic:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - certs:/letsencrypt
       - logs:/logs

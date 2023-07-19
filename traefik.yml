@@ -20,6 +20,10 @@ providers:
     exposedByDefault: false
     swarmMode: false
 
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
 tls:
   options:
     default:
